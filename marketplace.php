@@ -1,7 +1,7 @@
 <?php
 /**
  * The Marketplace Plugin for Themekraft
- * 
+ *
  * @package		Marketplace
  * @subpackage	Main
  * @author		Boris Glumpler
@@ -9,13 +9,13 @@
  * @link		https://shabushabu.eu
  * @license		http://www.opensource.org/licenses/gpl-3.0.php GPL License
  * @since 		Marketplace 0.9
- * @filesource 
+ * @filesource
  *
  * Plugin Name:	Marketplace for Woocommerce
  * Plugin URI:	https://github.com/Themekraft/Marketplace
  * Description:	Turns a Woocommerce/Woocommerce for BuddyPress installation into a fully functional marketplace
  * Author: 		Marketplace Development Team
- * Version: 	0.9
+ * Version: 	0.9.1
  * Author URI: 	https://github.com/Themekraft/Marketplace
  * Text Domain: marketplace
  * Domain Path: assets/languages/
@@ -30,7 +30,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -48,7 +48,7 @@ if( ! class_exists( 'Marketplace' ) ) :
 final class Marketplace
 {
 	/**
-	 * To prevent unauthorized access, Marketplace variables are stored 
+	 * To prevent unauthorized access, Marketplace variables are stored
 	 * in a private array that is magically updated using PHP 5.2+
 	 * methods. This is to prevent third party plugins from tampering with
 	 * essential information indirectly, which would cause issues later.
@@ -58,10 +58,10 @@ final class Marketplace
 	 * @since 		Marketplace 0.9
 	 */
 	private $_data = array();
-	
+
 	/**
 	 * Marketplace instance. There can only be one!!
-	 * 
+	 *
 	 * @staticvar 	object
 	 * @since 		Marketplace 0.9
 	 */
@@ -69,18 +69,20 @@ final class Marketplace
 
 	/**
 	 * Marketplace Instance
-	 * 
+	 *
 	 * Makes sure that there is only ever 1 instance of Marketplace
-	 * 
+	 *
 	 * @since 		Marketplace 0.9
 	 */
 	public static function instance() {
 		if( ! self::$_instance instanceof self ) {
 			self::$_instance = new self();
 			self::$_instance->_setup_globals()
-							->_includes();
+							->_includes()
+							->_setup_admin()
+							->_setup_actions();
 		}
-		
+
 		return self::$_instance;
 	}
 
@@ -100,7 +102,7 @@ final class Marketplace
 	 * @since 	Marketplace 0.9
 	 */
 	public function __clone() {
-		 _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; huh?', 'marketplace' ), '0.9' ); 
+		 _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; huh?', 'marketplace' ), '0.9' );
 	}
 
 	/**
@@ -109,7 +111,7 @@ final class Marketplace
 	 * @since 	Marketplace 0.9
 	 */
 	public function __wakeup() {
-		 _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; huh?', 'marketplace' ), '0.9' ); 
+		 _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; huh?', 'marketplace' ), '0.9' );
 	}
 
 	/**
@@ -127,7 +129,7 @@ final class Marketplace
 	 * @since 	Marketplace 0.9
 	 */
 	public function __get( $key ) {
-		 return isset( $this->_data[$key] ) ? $this->_data[$key] : null; 
+		 return isset( $this->_data[$key] ) ? $this->_data[$key] : null;
 	}
 
 	/**
@@ -136,7 +138,7 @@ final class Marketplace
 	 * @since 	Marketplace 0.9
 	 */
 	public function __set( $key, $value ) {
-		 $this->_data[$key] = $value; 
+		 $this->_data[$key] = $value;
 	}
 
 	/**
@@ -145,9 +147,9 @@ final class Marketplace
 	 * @since 		Marketplace 0.9
 	 */
 	private function _setup_globals() {
-		$this->version    	= '0.9';
+		$this->version    	= '0.9.1';
 		$this->db_version 	= '100';
-		
+
 		$this->file       = __FILE__;
 		$this->basename   = plugin_basename( $this->file );
 		$this->folder	  = dirname( $this->basename );
@@ -156,29 +158,63 @@ final class Marketplace
 
 		return $this;
 	}
-	
+
 	/**
-	 * Include some files
+	 * Set some actions
 	 *
-	 * @since 		Marketplace 0.9
+	 * @since 		Marketplace 0.9.1
+	 */
+	private function _setup_actions() {
+		add_action( 'bp_setup_components', array( $this, 'start' ), 10 );
+
+		return $this;
+	}
+
+	/**
+	 * Set up the admin area
+	 *
+	 * @since 		Marketplace 0.9.1
+	 */
+	private function _setup_admin() {
+		if( ! is_admin() )
+			return $this;
+
+		$files = array(
+			'actions',
+			'admin'
+		);
+
+		foreach( $files as $file )
+			require $this->plugin_dir .'admin/'. $file .'.php';
+
+		return $this;
+	}
+
+	/**
+	 * Load files
+	 *
+	 * @since 		Marketplace 0.9.1
 	 */
 	private function _includes() {
 		$files = array(
-			'core/paypal',
-			'core/template',
-			'core/component',
-			'core/functions'
+			'paypal',
+			'template',
+			'functions'
 		);
-		
-		if( is_admin() ) :
-			$files[] = 'admin/actions';
-			$files[] = 'admin/admin';
-		endif;
-			
+
 		foreach( $files as $file )
-			require $this->plugin_dir . $file .'.php';
-			
+			require $this->plugin_dir .'core/'. $file .'.php';
+
 		return $this;
+	}
+
+	/**
+	 * Start the application
+	 *
+	 * @since 		Marketplace 0.9.1
+	 */
+	public function start() {
+		require $this->plugin_dir .'core/component.php';
 	}
 }
 
@@ -208,7 +244,7 @@ endif;
 
 /**
  * Handles activation
- * 
+ *
  * It would be better if Woocommerce would provide custom capabilities for products
  * for more fine-grained control. At the moment Woocommerce only provides 1 capability
  * (manage_woocommerce_products) to manage everything.

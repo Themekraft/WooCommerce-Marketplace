@@ -1,7 +1,7 @@
 <?php
 /**
  * Holds the marketplace template functions
- * 
+ *
  * @package		Marketplace
  * @subpackage	Main
  * @author		Boris Glumpler
@@ -9,15 +9,15 @@
  * @link		https://shabushabu.eu
  * @license		http://www.opensource.org/licenses/gpl-3.0.php GPL License
  * @since 		Marketplace 0.9
- * @filesource 
+ * @filesource
  */
- 
+
 // Exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Look for the templates in the proper places
- * 
+ *
  * @since	Marketplace 0.9
  * @param	string	$found_template		The found template
  * @param	array 	$templates			All possible templates
@@ -27,17 +27,36 @@ function mp_load_template_filter( $found_template, $templates ) {
         foreach( (array)$templates as $template ) {
             if( file_exists( STYLESHEETPATH .'/'. $template ) )
                 $filtered_templates[] = STYLESHEETPATH .'/'. $template;
-                
+
             else
                 $filtered_templates[] = marketplace()->plugin_dir .'templates/'. $template;
         }
-    
+
         return apply_filters( 'mp_load_template_filter', $filtered_templates[0] );
     }
     else
         return $found_template;
 }
 add_filter( 'bp_located_template', 'mp_load_template_filter', 10, 2 );
+
+/**
+ * Load a template in the correct order
+ *
+ * @since	Marketplace 0.9
+ * @param	string	$template_name		The template to load
+ */
+function mp_load_template( $template_name ) {
+	if( file_exists( STYLESHEETPATH .'/marketplace/'. $template_name .'.php' ) )
+		$located = STYLESHEETPATH .'/marketplace/'. $template_name .'.php';
+
+	elseif( file_exists( TEMPLATEPATH .'/marketplace/'. $template_name .'.php' ) )
+		$located = TEMPLATEPATH .'/marketplace/'. $template_name .'.php';
+
+	else
+		$located = marketplace()->plugin_dir .'templates/marketplace/'. $template_name .'.php';
+
+	include( $located );
+}
 
 /**
  * Display the earnings for an author
@@ -55,7 +74,7 @@ function mp_earnings_template() {
  */
 function mp_settings_template() {
 	global $bp_settings_updated;
-	
+
 	if( ! bp_is_active( 'settings' ) )
 		return false;
 
@@ -63,20 +82,20 @@ function mp_settings_template() {
 
 	if( isset( $_POST['submit'] ) )	{
 		check_admin_referer( 'mp_marketplace_settings' );
-		
+
 		if( isset( $_POST['paypal-email'] ) && is_email( $_POST['paypal-email'] ) ) :
 			$email = wp_filter_kses( $_POST['paypal-email'] );
-			
+
 			update_user_meta( bp_displayed_user_id(), 'mp_paypal_address', $email );
 		endif;
 
 		if( isset( $_POST['bank-details'] ) ) :
 			$details = array();
-			
+
 			foreach( $_POST['bank-details'] as $key => $detail ) :
 				$details[$key] = wp_filter_kses( $detail );
 			endforeach;
-			
+
 			update_user_meta( bp_displayed_user_id(), 'mp_bank_details', $details );
 		endif;
 
@@ -95,7 +114,7 @@ function mp_settings_template() {
  * @since  	Marketplace 0.9
  */
 function mp_settings_title() {
-	echo '<h3>'. __( 'Marketplace Settings', 'marketplace' ) .'</h3>';	
+	echo '<h3>'. __( 'Marketplace Settings', 'marketplace' ) .'</h3>';
 }
 
 /**
@@ -105,17 +124,17 @@ function mp_settings_title() {
  */
 function mp_settings_content() {
 	global $bp_settings_updated;
-	
+
 	$user_notice 	= get_option( 'mp_user_notice' );
 	$paypal_address = get_user_meta( bp_displayed_user_id(), 'mp_paypal_address', true );
 	$bank_details	= get_user_meta( bp_displayed_user_id(), 'mp_bank_details',   true );
-	
+
 	if ( $bp_settings_updated ) { ?>
 		<div id="message" class="updated fade">
 			<p><?php _e( 'Changes Saved.', 'marketplace' ) ?></p>
 		</div>
 	<?php } ?>
-	
+
 	<div id="mp-user-notice">
 		<?php echo wpautop( $user_notice ); ?>
 	</div>
@@ -160,6 +179,27 @@ function mp_settings_content() {
 		</div>
 	</form>
 	<?php
+}
+
+/**
+ * Check if the passed user already has at least 1 published product
+ *
+ * @since  	Marketplace 0.9.1
+ */
+function mp_has_products( $user_id = 0 ) {
+	if( empty( $user_id ) )
+		$user_id = bp_displayed_user_id();
+
+	$products = get_posts( array(
+		'post_type' 	=> 'product',
+		'numberposts' 	=> 1,
+		'author'		=> $user_id
+	) );
+
+	if( count( $products ) > 0 )
+		return true;
+
+	return false;
 }
 
 /* End of file template.php */

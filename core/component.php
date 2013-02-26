@@ -1,7 +1,7 @@
 <?php
 /**
  * Holds the marketplace component
- * 
+ *
  * @package		Marketplace
  * @subpackage	Main
  * @author		Boris Glumpler
@@ -9,9 +9,9 @@
  * @link		https://shabushabu.eu
  * @license		http://www.opensource.org/licenses/gpl-3.0.php GPL License
  * @since 		Marketplace 0.9
- * @filesource 
+ * @filesource
  */
- 
+
 // Exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
 
@@ -60,7 +60,7 @@ class Marketplace_Component extends BP_Component
     public function setup_nav() {
     	if( ! current_user_can( 'marketplace_author' ) )
 			return false;
-		
+
         // Add 'Eearnings' to the main navigation
         $main_nav = array(
             'name'                      => __( 'Earnings', 'marketplace' ),
@@ -83,16 +83,24 @@ class Marketplace_Component extends BP_Component
 			'item_css_id' 		=> 'settings-marketplace',
 			'user_has_access' 	=> bp_is_my_profile()
 		);
-                                
+
         do_action( 'bp_marketplace_setup_nav' );
-        
+
         parent::setup_nav( $main_nav, $sub_nav );
     }
 }
 
-// Create the marketplace component
-global $bp;
-$bp->marketplace = new Marketplace_Component();
+/**
+ * Sets up the component
+ *
+ * @since   Marketplace 0.9.1
+ */
+function mp_setup_component() {
+	global $bp;
+
+	$bp->marketplace = new Marketplace_Component();
+}
+add_action( 'bp_setup_components', 'mp_setup_component', 11 );
 
 /* End of file component.php */
 /* Location: ./core/component.php */
