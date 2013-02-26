@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Marketplace 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-18 14:34+0700\n"
-"PO-Revision-Date: 2013-01-18 14:34+0700\n"
+"POT-Creation-Date: 2013-02-26 13:44+0700\n"
+"PO-Revision-Date: 2013-02-26 13:44+0700\n"
 "Last-Translator: Boris Glumpler <boris@shabushabu.eu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,272 +14,325 @@ msgstr ""
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: ..\n"
 "X-Poedit-SearchPath-2: ../..\n"
 
-#: ../../marketplace.php:103 ../../marketplace.php:112
+#: ../../marketplace.php:105 ../../marketplace.php:114
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: ../../admin/admin.php:190 ../../admin/admin.php:191
+#: ../../admin/admin.php:192 ../../admin/admin.php:193
+#: ../../admin/admin.php:468 ../../admin/admin.php:469
 #: ../../core/component.php:34 ../../core/component.php:77
 msgid "Marketplace"
 msgstr ""
 
-#: ../../admin/admin.php:202 ../../admin/admin.php:203
-#: ../../admin/pages/earnings.php:35 ../../admin/tables/earnings.php:144
-#: ../../core/component.php:66 ../../templates/marketplace/earnings.php:126
+#: ../../admin/admin.php:204 ../../admin/admin.php:205
+#: ../../admin/admin.php:480 ../../admin/admin.php:481
+#: ../../admin/pages/earnings.php:36 ../../admin/pages/earnings.php:109
+#: ../../admin/tables/earnings.php:145 ../../admin/tables/earnings.php:381
+#: ../../core/component.php:66
+#: ../../templates/marketplace/earnings-table.php:98
+#: ../../templates/marketplace/earnings.php:190
 msgid "Earnings"
 msgstr ""
 
-#: ../../admin/admin.php:212 ../../admin/admin.php:213
-#: ../../admin/pages/authors.php:30
+#: ../../admin/admin.php:214 ../../admin/admin.php:215
+#: ../../admin/admin.php:490 ../../admin/admin.php:491
+#: ../../admin/pages/authors.php:31 ../../admin/pages/authors.php:74
 msgid "Authors"
 msgstr ""
 
-#: ../../admin/admin.php:252 ../../core/template.php:98
+#: ../../admin/admin.php:254 ../../admin/admin.php:530
+#: ../../core/template.php:117
 msgid "Marketplace Settings"
 msgstr ""
 
-#: ../../admin/admin.php:254
+#: ../../admin/admin.php:256 ../../admin/admin.php:532
 msgid "Default Marketplace Rate"
 msgstr ""
 
-#: ../../admin/admin.php:255
+#: ../../admin/admin.php:257 ../../admin/admin.php:533
 msgid "Send payments automatically"
 msgstr ""
 
-#: ../../admin/admin.php:256
+#: ../../admin/admin.php:258 ../../admin/admin.php:534
 msgid "User Notice"
 msgstr ""
 
-#: ../../admin/functions.php:36
+#: ../../admin/functions.php:37 ../../admin/functions.php:154
 msgid "Set the default rate for all users."
 msgstr ""
 
-#: ../../admin/functions.php:49
+#: ../../admin/functions.php:50 ../../admin/functions.php:167
 msgid "Check to enable automatic sending of commissions."
 msgstr ""
 
-#: ../../admin/functions.php:62
+#: ../../admin/functions.php:63 ../../admin/functions.php:180
 msgid "Add a notice for marketplace authors."
 msgstr ""
 
-#: ../../admin/pages/authors.php:35
+#: ../../admin/functions.php:112 ../../admin/functions.php:229
+#: ../../admin/tables/authors.php:111 ../../admin/tables/authors.php:314
+msgid "Pay Now"
+msgstr ""
+
+#: ../../admin/paypal.php:40 ../../admin/paypal.php:98
+#, php-format
+msgid "Comission payment for: %s"
+msgstr ""
+
+#: ../../admin/pages/authors.php:36 ../../admin/pages/authors.php:79
 msgid "Search Users"
 msgstr ""
 
-#: ../../admin/pages/earnings.php:44
-#: ../../templates/marketplace/earnings.php:110
+#: ../../admin/pages/earnings.php:45 ../../admin/pages/earnings.php:118
+#: ../../templates/marketplace/earnings-table.php:82
+#: ../../templates/marketplace/earnings.php:174
 #, php-format
 msgid "%1$s %2$d"
 msgstr ""
 
-#: ../../admin/pages/earnings.php:46
+#: ../../admin/pages/earnings.php:47 ../../admin/pages/earnings.php:120
 #, php-format
 msgid "Earnings for %1$s"
 msgstr ""
 
-#: ../../admin/pages/earnings.php:49
+#: ../../admin/pages/earnings.php:50 ../../admin/pages/earnings.php:123
 msgid "Total Earnings"
 msgstr ""
 
-#: ../../admin/pages/single-author.php:36
+#: ../../admin/pages/single-author.php:37
+#: ../../admin/pages/single-author.php:132
 #, php-format
 msgid "Author: <a href=\"%s\">%s</a>"
 msgstr ""
 
-#: ../../admin/pages/single-author.php:40
+#: ../../admin/pages/single-author.php:41
+#: ../../admin/pages/single-author.php:136
 msgid "User rate has been updated."
-msgstr ""
-
-#: ../../admin/pages/single-author.php:48
-#: ../../admin/pages/single-author.php:57
-msgid "Earnings all time"
 msgstr ""
 
 #: ../../admin/pages/single-author.php:49
 #: ../../admin/pages/single-author.php:58
-msgid "Earnings current month"
+#: ../../admin/pages/single-author.php:144
+#: ../../admin/pages/single-author.php:153
+msgid "Earnings all time"
 msgstr ""
 
 #: ../../admin/pages/single-author.php:50
 #: ../../admin/pages/single-author.php:59
-msgid "Member since"
+#: ../../admin/pages/single-author.php:145
+#: ../../admin/pages/single-author.php:154
+msgid "Earnings current month"
 msgstr ""
 
 #: ../../admin/pages/single-author.php:51
-#: ../../admin/pages/single-author.php:60 ../../admin/tables/earnings.php:143
-#: ../../templates/marketplace/earnings.php:49
-msgid "Rate"
+#: ../../admin/pages/single-author.php:60
+#: ../../admin/pages/single-author.php:146
+#: ../../admin/pages/single-author.php:155
+msgid "Member since"
 msgstr ""
 
 #: ../../admin/pages/single-author.php:52
 #: ../../admin/pages/single-author.php:61
+#: ../../admin/pages/single-author.php:147
+#: ../../admin/pages/single-author.php:156 ../../admin/tables/earnings.php:144
+#: ../../admin/tables/earnings.php:380
+#: ../../templates/marketplace/earnings-table.php:21
+#: ../../templates/marketplace/earnings.php:113
+msgid "Rate"
+msgstr ""
+
+#: ../../admin/pages/single-author.php:53
+#: ../../admin/pages/single-author.php:62
+#: ../../admin/pages/single-author.php:148
+#: ../../admin/pages/single-author.php:157
 msgid "Pay now"
 msgstr ""
 
-#: ../../admin/pages/single-author.php:74
+#: ../../admin/pages/single-author.php:75
+#: ../../admin/pages/single-author.php:170
 msgid "Update"
 msgstr ""
 
-#: ../../admin/tables/authors.php:82
+#: ../../admin/tables/authors.php:83 ../../admin/tables/authors.php:286
 msgid "No matching users were found."
 msgstr ""
 
-#: ../../admin/tables/authors.php:105
+#: ../../admin/tables/authors.php:106 ../../admin/tables/authors.php:309
 msgid "Name"
 msgstr ""
 
-#: ../../admin/tables/authors.php:106
+#: ../../admin/tables/authors.php:107 ../../admin/tables/authors.php:310
 msgid "Products"
 msgstr ""
 
-#: ../../admin/tables/authors.php:107
+#: ../../admin/tables/authors.php:108 ../../admin/tables/authors.php:311
 msgid "Earnings (total)"
 msgstr ""
 
-#: ../../admin/tables/authors.php:108
+#: ../../admin/tables/authors.php:109 ../../admin/tables/authors.php:312
 msgid "Earnings (current month)"
 msgstr ""
 
-#: ../../admin/tables/authors.php:109
+#: ../../admin/tables/authors.php:110 ../../admin/tables/authors.php:313
 msgid "Member Since"
 msgstr ""
 
-#: ../../admin/tables/authors.php:110
-msgid "Pay Now"
-msgstr ""
-
-#: ../../admin/tables/authors.php:171
+#: ../../admin/tables/authors.php:172 ../../admin/tables/authors.php:375
 msgid "No products yet."
 msgstr ""
 
-#: ../../admin/tables/earnings.php:119
-#: ../../templates/marketplace/earnings.php:116
+#: ../../admin/tables/earnings.php:120 ../../admin/tables/earnings.php:356
+#: ../../templates/marketplace/earnings-table.php:88
+#: ../../templates/marketplace/earnings.php:180
 msgid "Filter"
 msgstr ""
 
-#: ../../admin/tables/earnings.php:138
+#: ../../admin/tables/earnings.php:139 ../../admin/tables/earnings.php:375
 msgid "ID"
 msgstr ""
 
-#: ../../admin/tables/earnings.php:139
+#: ../../admin/tables/earnings.php:140 ../../admin/tables/earnings.php:376
 msgid "Author"
 msgstr ""
 
-#: ../../admin/tables/earnings.php:140
-#: ../../templates/marketplace/earnings.php:123
+#: ../../admin/tables/earnings.php:141 ../../admin/tables/earnings.php:377
+#: ../../templates/marketplace/earnings-table.php:95
+#: ../../templates/marketplace/earnings.php:187
 msgid "Date"
 msgstr ""
 
-#: ../../admin/tables/earnings.php:141
+#: ../../admin/tables/earnings.php:142 ../../admin/tables/earnings.php:378
 msgid "Sales Amount"
 msgstr ""
 
-#: ../../admin/tables/earnings.php:142
-#: ../../templates/marketplace/earnings.php:125
+#: ../../admin/tables/earnings.php:143 ../../admin/tables/earnings.php:379
+#: ../../templates/marketplace/earnings-table.php:97
+#: ../../templates/marketplace/earnings.php:189
 msgid "Tax"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:125
-#: ../../templates/marketplace/earnings.php:122
+#: ../../admin/tables/single-author.php:126
+#: ../../admin/tables/single-author.php:345
+#: ../../templates/marketplace/earnings-table.php:94
+#: ../../templates/marketplace/earnings.php:186
 msgid "Product"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:126
+#: ../../admin/tables/single-author.php:127
+#: ../../admin/tables/single-author.php:346
 msgid "Date Published"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:127
+#: ../../admin/tables/single-author.php:128
+#: ../../admin/tables/single-author.php:347
 msgid "Total Sales"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:128
+#: ../../admin/tables/single-author.php:129
+#: ../../admin/tables/single-author.php:348
 msgid "Current Month Sales"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:129
+#: ../../admin/tables/single-author.php:130
+#: ../../admin/tables/single-author.php:349
 msgid "Last Month Sales"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:130
+#: ../../admin/tables/single-author.php:131
+#: ../../admin/tables/single-author.php:350
 msgid "Total Income"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:131
+#: ../../admin/tables/single-author.php:132
+#: ../../admin/tables/single-author.php:351
 msgid "Current Month Income"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:132
+#: ../../admin/tables/single-author.php:133
+#: ../../admin/tables/single-author.php:352
 msgid "Last Month Income"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:133
+#: ../../admin/tables/single-author.php:134
+#: ../../admin/tables/single-author.php:353
 msgid ""
 "Total income of this product in percentage to total income of the whole site "
 "(current month only)"
 msgstr ""
 
-#: ../../admin/tables/single-author.php:133
+#: ../../admin/tables/single-author.php:134
+#: ../../admin/tables/single-author.php:353
 msgid "Sale Percentage"
 msgstr ""
 
-#: ../../core/template.php:115
+#: ../../core/template.php:134
 msgid "Changes Saved."
 msgstr ""
 
-#: ../../core/template.php:127
+#: ../../core/template.php:146
 msgid "PayPal Address"
 msgstr ""
 
-#: ../../core/template.php:129
+#: ../../core/template.php:148
 msgid "Enter your PayPal email address to receive your commission."
 msgstr ""
 
-#: ../../core/template.php:133
+#: ../../core/template.php:152
 msgid "Bank Details"
 msgstr ""
 
-#: ../../core/template.php:135
+#: ../../core/template.php:154
 msgid "Bank Name"
 msgstr ""
 
-#: ../../core/template.php:140
+#: ../../core/template.php:159
 msgid "Bank Number"
 msgstr ""
 
-#: ../../core/template.php:145
+#: ../../core/template.php:164
 msgid "Account Number"
 msgstr ""
 
-#: ../../core/template.php:150
+#: ../../core/template.php:169
 msgid "BIC/Swift-Code"
 msgstr ""
 
-#: ../../core/template.php:155
+#: ../../core/template.php:174
 msgid "IBAN"
 msgstr ""
 
-#: ../../core/template.php:159
+#: ../../core/template.php:178
 msgid "Save Changes"
 msgstr ""
 
-#: ../../templates/marketplace/earnings.php:50
+#: ../../templates/marketplace/earnings-table.php:22
+#: ../../templates/marketplace/earnings.php:114
 msgid "Income current month"
 msgstr ""
 
-#: ../../templates/marketplace/earnings.php:51
+#: ../../templates/marketplace/earnings-table.php:23
+#: ../../templates/marketplace/earnings.php:115
 msgid "Total income"
 msgstr ""
 
-#: ../../templates/marketplace/earnings.php:124
+#: ../../templates/marketplace/earnings-table.php:96
+#: ../../templates/marketplace/earnings.php:188
 msgid "Total amount"
 msgstr ""
 
-#: ../../templates/marketplace/earnings.php:163
+#: ../../templates/marketplace/earnings-table.php:135
+#: ../../templates/marketplace/earnings.php:227
 #, php-format
 msgid "No sales for %s %s"
+msgstr ""
+
+#: ../../templates/marketplace/no-products.php:15
+#, php-format
+msgid ""
+"You have not created any products yet. <a href=\"%s\">Start selling</a>!"
 msgstr ""
