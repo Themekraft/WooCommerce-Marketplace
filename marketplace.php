@@ -60,6 +60,16 @@ final class Marketplace
 	private $_data = array();
 
 	/**
+	 * Holds all available api methods
+	 *
+	 * @var 	array
+	 * @since 	Marketplace 0.9.1
+	 */
+	private $_methods = array(
+		'version-check' => array( '1.0' )
+	);
+
+	/**
 	 * Marketplace instance. There can only be one!!
 	 *
 	 * @staticvar 	object
@@ -165,9 +175,62 @@ final class Marketplace
 	 * @since 		Marketplace 0.9.1
 	 */
 	private function _setup_actions() {
-		add_action( 'bp_setup_components', array( $this, 'start' ), 10 );
+		add_action( 'bp_setup_components', array( $this, 'start' 				), 10 );
+		add_action( 'init', 			   array( $this, 'register_api_methods' ), 10 );
+		add_action( 'template_redirect',   array( $this, 'handle_api' 		    ), 10 );
 
 		return $this;
+	}
+
+	/**
+	 * Register the API methods
+	 *
+	 * @since 	Marketplace 0.9.1
+	 * @access 	public
+	 */
+	public function register_api_methods() {
+		add_rewrite_endpoint( 'api', EP_ROOT );
+	}
+
+	/**
+	 * Handle api requests
+	 *
+	 * @since 	Marketplace 0.9.1
+	 */
+	public function handle_api() {
+		global $wp_query;
+
+		//var_dump($wp_query->query_vars);exit;
+
+		if( ! isset( $wp_query->query_vars['api'] ) )
+			return false;
+
+		// get the parameters
+		list( $requested_version, $method ) = array_filter( explode( '/', trim( get_query_var( 'api' ), '/' ) ) );
+
+		// get the correct version
+		if( in_array( $requested_version, $this->_methods[$method] ) ) :
+			$version = $requested_version;
+		else :
+			// filter out any alpha/beta APIs
+			foreach( $this->_methods[$method] as $key => $version ) :
+				if( strpos( $version, 'beta' ) !== false || strpos( $version, 'alpha' ) !== false || strpos( $version, 'dev' ) !== false ) :
+					unset( $this->_methods[$method][$key] );
+				endif;
+			endforeach;
+
+			// then get the highest number
+			$version = max( array_values( $this->_methods[$method] ) );
+		endif;
+
+		// include the correct api method
+		$file = $this->plugin_dir .'api/'. $version .'/'. $method .'.php';
+
+		if( file_exists( $file ) ) :
+			require $file;
+		endif;
+
+		return false;
 	}
 
 	/**
@@ -199,6 +262,7 @@ final class Marketplace
 		$files = array(
 			'paypal',
 			'template',
+			'api',
 			'functions'
 		);
 
@@ -257,6 +321,8 @@ function marketplace_activate() {
 		'read'							=> true,
 		'upload_files'					=> true
 	) );
+
+	flush_rewrite_rules();
 }
 register_activation_hook( __FILE__, 'marketplace_activate' );
 
