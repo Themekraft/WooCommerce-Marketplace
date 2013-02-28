@@ -1,0 +1,2 @@
+- show license keys for users
+- automatic upload to S3

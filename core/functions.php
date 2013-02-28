@@ -500,5 +500,45 @@ function mp_get_user_rate( $user = 0 ) {
 	return $rate;
 }
 
+/**
+ * Upload a file to Amazon S3
+ *
+ * @since  	Marketplace 0.9.1
+ */
+function mp_s3_upload( $product_id = 0, $file = 'amazon-s3', $bucket = 'marketplace-authors' ) {
+	if( empty( $product_id ) )
+		return WP_Error( 'missing_s3_product', __( 'Product ID is missing', 'marketplace' ) );
+
+	$config = get_option( 'woo_amazon_s3_storage', array() );
+
+	if( ! isset( $config['amazon_access_key'] ) || ! isset( $config['amazon_access_secret'] ) )
+		return WP_Error( 'missing_s3_credentials', __( 'S3 access credentials are missing.', 'marketplace' ) );
+
+	if( ! class_exists( 'S3' ) )
+		require marketplace()->plugin_dir .'library/S3.php';
+
+	$s3 = new S3( $config['amazon_access_key'], $config['amazon_access_secret'] );
+
+	$file_name = isset( $_FILES[$file]['name'] 		) ? $_FILES[$file]['name'] 		: false;
+    $file_temp = isset( $_FILES[$file]['tmp_name'] 	) ? $_FILES[$file]['tmp_name'] 	: false;
+
+	if( ! $file_name || ! $file_temp )
+		return WP_Error( 'missing_s3_file', __( 'Uploaded file is missing.', 'marketplace' ) );
+
+	// Does nothing if the bucket already exists
+	$s3->putBucket( $bucket, S3::ACL_AUTHENTICATED_READ );
+
+	if( $s3->putObjectFile( $file_temp, $bucket, $file_name, S3::ACL_AUTHENTICATED_READ ) ) :
+		update_post_meta( $product_id, '_use_amazon_s3', 	'yes' 		);
+		update_post_meta( $product_id, '_amazon_s3_bucket', $bucket 	);
+		update_post_meta( $product_id, '_amazon_s3_object', $file_name 	);
+
+		return true;
+
+	else :
+		return WP_Error( 's3_upload_error', __( 'The file could not be uploaded to S3.', 'marketplace' ) );
+	endif;
+}
+
 /* End of file functions.php */
 /* Location: ./core/functions.php */

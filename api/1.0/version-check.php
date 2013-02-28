@@ -108,7 +108,7 @@ class Marketplace_Version_Check extends Marketplace_API
 		endif;
 
 		// make sure the order has already been completed
-		if ( $data->order_id ) :
+		if( $data->order_id ) :
 			$order_status = wp_get_post_terms( $data->order_id, 'shop_order_status' );
 
 			if( $order_status[0]->slug != 'completed' ) :
