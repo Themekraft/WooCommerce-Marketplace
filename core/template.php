@@ -23,7 +23,7 @@ if( ! defined( 'ABSPATH' ) ) exit;
  * @param	array 	$templates			All possible templates
  */
 function mp_load_template_filter( $found_template, $templates ) {
-    if( bp_is_current_component( 'earnings' ) ) {
+    if( bp_is_current_component( 'earnings' ) || bp_is_current_component( 'settings' ) ) {
         foreach( (array)$templates as $template ) {
             if( file_exists( STYLESHEETPATH .'/'. $template ) )
                 $filtered_templates[] = STYLESHEETPATH .'/'. $template;
@@ -65,6 +65,83 @@ function mp_load_template( $template_name ) {
  */
 function mp_earnings_template() {
 	bp_core_load_template( apply_filters( 'marketplace_earnings_template', 'marketplace/earnings' ) );
+}
+
+/**
+ * Display the user license keys
+ *
+ * @since  	Marketplace 0.9.1
+ */
+function mp_licenses_template() {
+	if( ! bp_is_active( 'settings' ) )
+		return false;
+
+	add_action( 'bp_template_title', 	'mp_licenses_title' 	);
+	add_action( 'bp_template_content', 	'mp_licenses_content' 	);
+
+	bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
+}
+
+
+/**
+ * Display the marketplace settings title
+ *
+ * @since  	Marketplace 0.9.1
+ */
+function mp_licenses_title() {
+	echo '<h3>'. __( 'License Keys', 'marketplace' ) .'</h3>';
+}
+
+/**
+ * Display the marketplace settings content
+ *
+ * @since  	Marketplace 0.9
+ */
+function mp_licenses_content() {
+	global $wpdb;
+
+	$keys = $wpdb->get_results( $wpdb->prepare( "
+		SELECT wsl.*
+		FROM {$wpdb->prefix}woocommerce_software_licences wsl
+		RIGHT JOIN {$wpdb->postmeta} pm
+		ON pm.post_id = wsl.order_id
+		WHERE pm.meta_key = '_customer_user'
+		AND pm.meta_value = %s
+	", bp_displayed_user_id() ) );
+
+	?>
+	<table class="license-keys-table" id="license-keys-table">
+		<thead>
+			<tr>
+				<th class="product"><?php _e( 'Product', 'marketplace' ) ?></th>
+				<th class="api-key"><?php _e( 'API Key', 'marketplace' ) ?></th>
+				<th class="activation-email"><?php _e( 'Activation Email', 'marketplace' ) ?></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php
+		if( count( $keys ) > 0 ) :
+			foreach( $keys as $key ) :
+				$product = get_post( $key->software_product_id );
+				?>
+				<tr>
+					<td class="product"><a href="<?php echo get_permalink( $product ) ?>"><?php echo esc_html( $product->post_title ) ?></a></td>
+					<td class="api-key"><?php echo esc_html( $key->licence_key ) ?></td>
+					<td class="activation-email"><?php echo esc_html( $key->activation_email ) ?></td>
+				</tr>
+				<?php
+			endforeach;
+		else :
+			?>
+			<tr>
+				<td colspan="2"><?php _e( 'No API keys yet.', 'marketplace' ) ?></td>
+			</tr>
+			<?php
+		endif;
+		?>
+		</tbody>
+	</table>
+	<?php
 }
 
 /**

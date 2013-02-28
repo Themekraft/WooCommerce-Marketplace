@@ -58,10 +58,23 @@ class Marketplace_Component extends BP_Component
      * @since    Marketplace 0.9
      */
     public function setup_nav() {
+		bp_core_new_subnav_item( array(
+			'name' 				=> __( 'License Keys', 'events' ),
+			'slug' 				=> 'license-keys',
+			'parent_url' 		=> bp_loggedin_user_domain() . bp_get_settings_slug() . '/',
+			'parent_slug' 		=> bp_get_settings_slug(),
+			'screen_function' 	=> 'mp_licenses_template',
+			'position' 			=> 57,
+			'item_css_id' 		=> 'licenses-marketplace',
+			'user_has_access' 	=> bp_is_my_profile()
+		) );
+
     	if( ! current_user_can( 'marketplace_author' ) )
 			return false;
 
-        // Add 'Eearnings' to the main navigation
+    	$sub_nav = array();
+
+        // Add 'Earnings' to the main navigation
         $main_nav = array(
             'name'                      => __( 'Earnings', 'marketplace' ),
             'slug'                      => 'earnings',
